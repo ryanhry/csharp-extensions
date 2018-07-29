@@ -9,5 +9,10 @@ if [[ -z "$version" ]]; then
 	exit 1
 fi
 
+tag="nuget-$version"
+
 dotnet pack -c Release rm.Extensions/rm.Extensions.csproj \
-	//p:PackageVersion="$version"
+	-o ../ \
+	//p:PackageVersion="$version" \
+	//p:PackageReleaseNotes="tag: $tag" \
+	&& git tag "$tag" -m "Create nuget tag $tag"
